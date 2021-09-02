@@ -37,6 +37,22 @@ los mismos.
 
 # Construccion de modelos
 
+def newCatalog():
+   
+    catalog = {'books': None,
+               'authors': None,
+               'tags': None,
+               'book_tags': None}
+
+    catalog['books'] = lt.newList()
+    catalog['authors'] = lt.newList('SINGLE_LINKED',
+                                    cmpfunction=compareauthors)
+    catalog['tags'] = lt.newList('SINGLE_LINKED',
+                                 cmpfunction=comparetagnames)
+    catalog['book_tags'] = lt.newList('SINGLE_LINKED')
+
+    return catalog
+
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos
@@ -44,5 +60,16 @@ los mismos.
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+def compareauthors(authorname1, author):
+    if (authorname1.lower() in author['name'].lower()):
+        return 0
+    return -1
+
+def comparetagnames(name, tag):
+    if (name == tag['name']):
+        return 0
+    elif (name > tag['name']):
+        return 1
+    return -1    
 
 # Funciones de ordenamiento
