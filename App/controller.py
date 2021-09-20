@@ -21,7 +21,7 @@ def loadData(catalog):
 
 def loadArtists(catalog):
     
-    artistsfile = cf.data_dir + 'MoMA/Artists-utf8-small.csv'
+    artistsfile = cf.data_dir + 'MoMA/Artists-utf8-large.csv'
     input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
     for artist in input_file:
         model.addArtist(catalog, artist)
@@ -29,7 +29,7 @@ def loadArtists(catalog):
 
 def loadArtworks(catalog):
     
-    tagsfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    tagsfile = cf.data_dir + 'MoMA/Artworks-utf8-large.csv'
     input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
     for artwork in input_file:
         model.addArtwork(catalog, artwork)
@@ -50,5 +50,5 @@ def sortArtworksDateAquired(catalog):
 def artistsByDates(catalog,date1,date2):
     return model.artistsByDates(catalog,date1,date2)
 
-def artworksByDates(catalog,date1,date2)->str:
-    return model.artworksByDates
+def artworksByDates(catalog,date1,date2):
+    return model.artworksByDates(catalog,date1,date2)
