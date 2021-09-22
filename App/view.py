@@ -259,17 +259,17 @@ def newExposition():
         last3 = lt.subList(listExposition,len(listExposition)-2,3)
         for artwork1 in lt.iterator(first3):
             print('ObjectID: ' + artwork1['ObjectID'] + ', Title: ' + artwork1['Title'] +
-            ', ArtistsNames: ' + str(artwork['ArtistsNames']) +
-              ', Medium: ' + artwork['Medium'] + ', Date: ' + artwork['Date'] +
-             ', Dimensions: ' + artwork['Dimensions'] +  ', Classification: ' + artwork['Classification'] + 
-               ', Estimated area: ' + str(artwork['Area']) + ', URL: ' + artwork['URL']) 
+            ', ArtistsNames: ' + str(artwork1['ArtistsNames']) +
+              ', Medium: ' + artwork1['Medium'] + ', Date: ' + artwork1['Date'] +
+             ', Dimensions: ' + artwork1['Dimensions'] +  ', Classification: ' + artwork1['Classification'] + 
+               ', Estimated area: ' + str(artwork1['Area']) + ', URL: ' + artwork1['URL']) 
         print("")
         for artwork1 in lt.iterator(last3):
            print('ObjectID: ' + artwork1['ObjectID'] + ', Title: ' + artwork1['Title'] +
-            ', ArtistsNames: ' + str(artwork['ArtistsNames']) +
-              ', Medium: ' + artwork['Medium'] + ', Date: ' + artwork['Date'] +
-             ', Dimensions: ' + artwork['Dimensions'] +  ', Classification: ' + artwork['Classification'] + 
-               ', Estimated area: ' + str(artwork['Area']) + ', URL: ' + artwork['URL'])      
+            ', ArtistsNames: ' + str(artwork1['ArtistsNames']) +
+              ', Medium: ' + artwork1['Medium'] + ', Date: ' + artwork1['Date'] +
+             ', Dimensions: ' + artwork1['Dimensions'] +  ', Classification: ' + artwork1['Classification'] + 
+               ', Estimated area: ' + str(artwork1['Area']) + ', URL: ' + artwork1['URL'])      
  
 
 
