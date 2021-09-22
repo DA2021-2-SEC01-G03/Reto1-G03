@@ -28,11 +28,12 @@ def loadArtists(catalog):
 
 
 def loadArtworks(catalog):
-    
-    tagsfile = cf.data_dir + 'MoMA/Artworks-utf8-large.csv'
+    tagsfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
     for artwork in input_file:
         model.addArtwork(catalog, artwork)
+  
+        
 
 
 
@@ -42,7 +43,13 @@ def sortArtistsBeginDate(catalog):
     model.sortArtistsBeginDate(catalog)
 
 def sortArtworksDateAquired(catalog):
-    model.sortArtworksDateAquired(catalog)    
+    model.sortArtworksDateAquired(catalog)  
+
+def sortArtworksCost(list):
+    model.sortArtworksCost(list)
+
+def sortArtworksDate(list):
+    model.sortArtworksDate(list)          
 
 
 # Funciones de consulta sobre el catálogo
@@ -52,3 +59,15 @@ def artistsByDates(catalog,date1,date2):
 
 def artworksByDates(catalog,date1,date2):
     return model.artworksByDates(catalog,date1,date2)
+
+def artworkArtistByTechnique(catalog,artist):
+    return model.artworkArtistByTechnique(catalog,artist)
+
+def artworksByNationality(catalog):
+    return model.artworksByNacionality(catalog)    
+
+def objectsByNacionality(catalog,nationality):
+    return model.objectsOfNacionality(catalog,nationality)  
+
+def transportCostByDepartment(catalog,department):
+    return model.transportCostByDepartment(catalog,department)      
