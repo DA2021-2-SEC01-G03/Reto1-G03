@@ -1,4 +1,5 @@
 ﻿
+from operator import ne
 from typing import OrderedDict
 import config as cf
 import sys
@@ -226,13 +227,51 @@ def transportCostByDepartment():
 
     
     
+def newExposition():
+    list = controller.newExposition(catalog,date1,date2,area)
+    print("The MoMA is going to exhibit pieces from " + str(date1) + " to " + str(date2) )
+    print("There are " + str(lt.size(list)) + " possible items in a available area of " + str(area) + " m^2") 
     
+    listExposition = lt.newList()
+    maxArea = 0
+    for artwork in lt.iterator(list):
+        if artwork['Area'] + maxArea < area:
+            maxArea += artwork['Area']
+            lt.addLast(listExposition,artwork)
 
+    maxArea = round(maxArea,2)        
 
+    print("The possible exhibit has " + str(lt.size(listExposition)) + " items" )   
+    print("Filling " + str(maxArea) + " m^2 of the " + str(area) + " m^2 available")
+    print("")
 
+    print("The first and last 3 objects of the new exposition are...")
+    if lt.size(listExposition) <= 6:
+        for artwork1 in lt.iterator(listExposition):
+            print('ObjectID: ' + artwork1['ObjectID'] + ', Title: ' + artwork1['Title'] +
+            ', ArtistsNames: ' + str(artwork['ArtistsNames']) +
+              ', Medium: ' + artwork['Medium'] + ', Date: ' + artwork['Date'] +
+             ', Dimensions: ' + artwork['Dimensions'] +  ', Classification: ' + artwork['Classification'] + 
+               ', Estimated area: ' + str(artwork['Area']) + ', URL: ' + artwork['URL']) 
     
+    else:
+        first3 = lt.subList(listExposition,1,3)
+        last3 = lt.subList(listExposition,len(listExposition)-2,3)
+        for artwork1 in lt.iterator(first3):
+            print('ObjectID: ' + artwork1['ObjectID'] + ', Title: ' + artwork1['Title'] +
+            ', ArtistsNames: ' + str(artwork['ArtistsNames']) +
+              ', Medium: ' + artwork['Medium'] + ', Date: ' + artwork['Date'] +
+             ', Dimensions: ' + artwork['Dimensions'] +  ', Classification: ' + artwork['Classification'] + 
+               ', Estimated area: ' + str(artwork['Area']) + ', URL: ' + artwork['URL']) 
+        print("")
+        for artwork1 in lt.iterator(last3):
+           print('ObjectID: ' + artwork1['ObjectID'] + ', Title: ' + artwork1['Title'] +
+            ', ArtistsNames: ' + str(artwork['ArtistsNames']) +
+              ', Medium: ' + artwork['Medium'] + ', Date: ' + artwork['Date'] +
+             ', Dimensions: ' + artwork['Dimensions'] +  ', Classification: ' + artwork['Classification'] + 
+               ', Estimated area: ' + str(artwork['Area']) + ', URL: ' + artwork['URL'])      
+ 
 
-    
 
 
 
@@ -248,6 +287,7 @@ def printMenu():
     print("4- Artworks of an artist by technique") 
     print("5- Nationalitys with most artworks")
     print("6- Artworks cost by department")
+    print("7- New exposition in a range of dates and an available area")
     print("0- Salir")
 
 catalog = None
@@ -287,7 +327,16 @@ while True:
         department = input("Enter department ")
         transportCostByDepartment()
 
+    
+    
     elif int(inputs[0]) == 7:
+        date1 = int(input("Enter first year (YYYY) "))
+        date2 = int(input("Enter last year (YYYY) "))
+        area = int(input("Enter the available area in m^2 "))
+        newExposition()
+
+    
+    elif int(inputs[0]) == 8:
         print(catalog['artworks'])   
         
 

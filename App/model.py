@@ -39,6 +39,11 @@ def addArtwork(catalog, artwork):
                 artwork['ArtistsNames'].append(artist['DisplayName'])
                 artwork['Nationality'].append(artist['Nationality'])
 
+            if artwork['Height (cm)'] != '' and artwork['Width (cm)'] != '' and artwork['Depth (cm)'] == '' and artwork['Length (cm)'] == '':
+             artwork['Area'] = (float(artwork['Height (cm)']) * float(artwork['Width (cm)']))/100
+            else: 
+              artwork['Area'] = 0   
+
                 
     
 
@@ -192,8 +197,9 @@ def transportCostByDepartment(catalog,department):
               finalCost = costMettersCubed
            elif costMettersSquared > costWeight and costMettersSquared > costMettersCubed:
                finalCost = costMettersSquared
+               artwork['Area'] = (width*height)/100
 
-           artwork['cost'] = finalCost 
+           artwork['cost'] = finalCost         
            costsSum += finalCost
            weightsSum += weight
 
@@ -201,8 +207,17 @@ def transportCostByDepartment(catalog,department):
 
     return ((listArtworks),costsSum,weightsSum)
 
+def newExposition(catalog,date1,date2,area):
+    artworks = catalog['artworks']
+    Exposition = lt.newList()
+    for artwork in lt.iterator(artworks):
+        if artwork['Date'] != "" and len(artwork['Date']) == 4 and artwork['Date'] != "n.d."  and artwork['Area'] > 0 :
+            if int(artwork['Date']) >= date1 and int(artwork['Date']) <= date2:
+                lt.addLast(Exposition,artwork)
 
+    return Exposition
 
+    
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -223,7 +238,7 @@ def compareCost(artwork1,artwork2):
 
 def compareDate(artwork1,artwork2):
     
-    if artwork1['Date'] == "Unknown" or artwork1['Date'] == "" or len(artwork1['Date']) > 4:
+    if artwork1['Date'] == "" or len(artwork1['Date']) > 4:
         date1 = 3000
     else:
         date1 = artwork1['Date']
