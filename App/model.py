@@ -35,14 +35,15 @@ def addArtwork(catalog, artwork):
     artwork['ArtistsNames'] = []
     artwork['Nationality'] = []
     for artist in lt.iterator(catalog['artists']):
-            if str("[")+ artist['ConstituentID']+str(",") in constituents or str(" ")+ artist['ConstituentID']+str("]") in constituents or str(" ")+ artist['ConstituentID']+str(",") in constituents or str("[")+ artist['ConstituentID']+str("]") in constituents:
+            c = str("[")+ artist['ConstituentID']+str(",")  or str(" ")+ artist['ConstituentID']+str("]")  or str(" ")+ artist['ConstituentID']+str(",") or str("[")+ artist['ConstituentID']+str("]")
+            if c in constituents:
                 artwork['ArtistsNames'].append(artist['DisplayName'])
                 artwork['Nationality'].append(artist['Nationality'])
+    artwork['Area'] = 0 
+    if artwork['Height (cm)'] != '' and artwork['Width (cm)'] != '' and artwork['Depth (cm)'] == '' and artwork['Length (cm)'] == '':
+       artwork['Area'] = (float(artwork['Height (cm)']) * float(artwork['Width (cm)']))/100            
 
-            if artwork['Height (cm)'] != '' and artwork['Width (cm)'] != '' and artwork['Depth (cm)'] == '' and artwork['Length (cm)'] == '':
-             artwork['Area'] = (float(artwork['Height (cm)']) * float(artwork['Width (cm)']))/100
-            else: 
-              artwork['Area'] = 0   
+              
 
                 
     
