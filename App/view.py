@@ -190,20 +190,13 @@ def transportCostByDepartment():
     totalArtworks = lt.size(list)
     print("The MoMA is going to transport " + str(totalArtworks) + " artifacts from the " + str(department) + " MoMA's department")
     print("REMEMBER!, NOT all MoMA´s data is complete!!!... These are estimates")
-    print("Estimated cargo weight (kg): " + str(totalWeight))
-    print("Estimated cargo cost (USD): " + str(totalCost))
+    print("Estimated cargo weight (kg): " + str(round(totalWeight,2)))
+    print("Estimated cargo cost (USD): " + str(round(totalCost,2)))
 
 
+    top5Expensive = lt.subList(list,lt.size(list)-5,5)
+    controller.sortArtworksCost(list)
 
-
-    listByDate = controller.transportCostByDepartment(catalog,department)[0]
-    listByCost = controller.transportCostByDepartment(catalog,department)[0]
-    controller.sortArtworksCost(listByCost)
-    controller.sortArtworksDate(listByDate)
-
-    top5Expensive = lt.subList(listByCost,lt.size(listByCost)-5,5)
-    top5Oldest = lt.subList(listByDate,1,5)
-    
     print("")
     print("The most 5 expensive items to transport are...")
     
@@ -212,17 +205,22 @@ def transportCostByDepartment():
              artwork['Title']  +  ', Medium: ' + artwork['Medium'] + ', Date: ' + artwork['Date'] +
              ', Dimensions: ' + artwork['Dimensions'] + ', Department: ' 
              + artwork['Department'] +  ', Classification: ' + artwork['Classification'] + 
-             ', URL: ' + artwork['URL'])
+              ', TransCost (USD): ' + str(artwork['cost']) + ', URL: ' +  artwork['URL'])
 
     print("")
+
+    controller.sortArtworksDate(list)
+    top5Oldest = lt.subList(list,1,5)
+    
+   
     print("The top 5 oldest items to transport are...")   
 
     for artwork in lt.iterator(top5Oldest):
         print('ObjectID: ' + artwork['ObjectID'] + ',  Title: ' +
-             artwork['Title']  +  ', ArtistsNames: ' + artwork['ArtistsNames']+
+             artwork['Title']  +  ', ArtistsNames: ' + str(artwork['ArtistsNames']) +
               ', Medium: ' + artwork['Medium'] + ', Date: ' + artwork['Date'] +
              ', Dimensions: ' + artwork['Dimensions'] +  ', Classification: ' + artwork['Classification'] + 
-             +  ', TransCost (USD): ' + artwork['cost'] + ', URL: ' + artwork['URL']) 
+               ', TransCost (USD): ' + str(artwork['cost']) + ', URL: ' + artwork['URL']) 
         
 
     

@@ -15,7 +15,7 @@ def newCatalog():
                'artworks': None,
                }
 
-    catalog['artists'] = lt.newList('ARRAY_LIST')
+    catalog['artists'] = lt.newList('ARRAY_LIST',cmpfunction= compareIDs)
     catalog['artworks'] = lt.newList('ARRAY_LIST')
    
     return catalog
@@ -31,19 +31,30 @@ def addArtist(catalog, artist):
 def addArtwork(catalog, artwork):
 
     lt.addLast(catalog['artworks'], artwork)
-    constituents = artwork['ConstituentID']
-    artwork['ArtistsNames'] = []
-    artwork['Nationality'] = []
-    for artist in lt.iterator(catalog['artists']):
-            c = str("[")+ artist['ConstituentID']+str(",")  or str(" ")+ artist['ConstituentID']+str("]")  or str(" ")+ artist['ConstituentID']+str(",") or str("[")+ artist['ConstituentID']+str("]")
-            if c in constituents:
-                artwork['ArtistsNames'].append(artist['DisplayName'])
-                artwork['Nationality'].append(artist['Nationality'])
-    artwork['Area'] = 0 
+    constituents = artwork['ConstituentID'][1:][:-1].split(",")
+    artwork['Constituents'] = constituents
     if artwork['Height (cm)'] != '' and artwork['Width (cm)'] != '' and artwork['Depth (cm)'] == '' and artwork['Length (cm)'] == '':
-       artwork['Area'] = (float(artwork['Height (cm)']) * float(artwork['Width (cm)']))/100            
+       artwork['Area'] = (float(artwork['Height (cm)']) * float(artwork['Width (cm)']))/100   
+    else:
+        artwork['Area'] = 0    
 
-              
+             
+
+def loadArtistsNames(catalog):
+    for artworks in lt.iterator(catalog['artworks']):
+       artworks['ArtistsNames'] = []
+       artworks['Nationality'] = []
+       constituents = artworks['Constituents']  
+       i = 0
+       tam = len(constituents)
+       while i < tam:
+           pos = lt.isPresent(catalog['artists'],constituents[i])
+           artist = lt.getElement(catalog['artists'],pos)
+           artworks['ArtistsNames'].append(artist['DisplayName'])
+           artworks['Nationality'].append(artist['Nationality'])
+           i += 1
+           
+
 
                 
     
@@ -253,6 +264,10 @@ def compareDate(artwork1,artwork2):
 
     return int(date1) < int(date2) 
     
+def compareIDs(authorname1, author):
+    if (int(authorname1) == int(author['ConstituentID'])):
+        return 0
+    return -1 
 
 # Funciones de ordenamiento
 
